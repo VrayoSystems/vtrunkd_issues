@@ -22,7 +22,7 @@
 VERSION=\"$(shell git describe --abbrev=4 --dirty --always)\"
 CC = @CC@
 CFLAGS = @CFLAGS@ @CPPFLAGS@ -W
-LDFLAGS = @LIBS@ -lutil -lrt -lresolv -lm
+LDFLAGS = @LIBS@ -lm
 
 YACC = @YACC@
 YACCFLAGS = -d
@@ -101,23 +101,22 @@ install_config:
 	if [ ! -f $(ETC_DIR)/vtrunkd.conf ]; then \
 	  $(INSTALL) -m 600 $(INSTALL_OWNER) vtrunkd.conf $(DESTDIR)$(ETC_DIR)/; \
 	fi
-	if [ ! -f $(ETC_DIR)/vtrunkd-srv.test.conf ]; then \
-	  $(INSTALL) -m 600 $(INSTALL_OWNER) test/vtrunkd-srv.test.conf $(DESTDIR)$(ETC_DIR)/; \
-	fi
-	if [ ! -f $(ETC_DIR)/vtrunkd-cli.test.conf ]; then \
-	  $(INSTALL) -m 600 $(INSTALL_OWNER) test/vtrunkd-cli.test.conf $(DESTDIR)$(ETC_DIR)/; \
-	fi
+	#if [ ! -f $(ETC_DIR)/vtrunkd-srv.test.conf ]; then \
+	#  $(INSTALL) -m 600 $(INSTALL_OWNER) test/vtrunkd-srv.test.conf $(DESTDIR)$(ETC_DIR)/; \
+	#fi
+	#if [ ! -f $(ETC_DIR)/vtrunkd-cli.test.conf ]; then \
+	#  $(INSTALL) -m 600 $(INSTALL_OWNER) test/vtrunkd-cli.test.conf $(DESTDIR)$(ETC_DIR)/; \
+	#fi
 install_scripts:
-	if [ ! -f $(prefix)/cli.sh ]; then \
-	  $(INSTALL) -m 755 $(INSTALL_OWNER) test/cli.sh $(DESTDIR)$(prefix)/; \
-	fi
-	if [ ! -f $(prefix)/srv.sh ]; then \
-	  $(INSTALL) -m 755 $(INSTALL_OWNER) test/srv.sh $(DESTDIR)$(prefix)/; \
-	fi
+	#if [ ! -f $(prefix)/cli.sh ]; then \
+	#  $(INSTALL) -m 755 $(INSTALL_OWNER) test/cli.sh $(DESTDIR)$(prefix)/; \
+	#fi
+	#if [ ! -f $(prefix)/srv.sh ]; then \
+	#  $(INSTALL) -m 755 $(INSTALL_OWNER) test/srv.sh $(DESTDIR)$(prefix)/; \
+	#fi
 
 
 install: vtrunkd install_config install_man install_scripts
-	mkdir /var/lock/vtrunkd
 	$(INSTALL) -d -m 755 $(INSTALL_OWNER) $(DESTDIR)$(VAR_DIR)/run
 	$(INSTALL) -d -m 755 $(INSTALL_OWNER) $(DESTDIR)$(STAT_DIR)
 	$(INSTALL) -d -m 755 $(INSTALL_OWNER) $(DESTDIR)$(LOCK_DIR)
